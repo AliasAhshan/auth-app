@@ -74,6 +74,7 @@ export default function LoginPage() {
 		/>
 		<button
 		onClick={onLogin}
+		disabled={buttonDisabled}
 		className="p-2 bg-blue-500 text-white rounded-lg mb-4 hover:bg-blue-600">Login here
 		</button>
 		<Link href="/signup">Visit Signup Page</Link>
