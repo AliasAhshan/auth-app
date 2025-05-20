@@ -28,6 +28,11 @@ export const sendEmail = async ({email, emailType, userId}: any) => {
         }
         });
 
+        console.log("Sending email to:", email);
+        console.log("Using domain:", process.env.DOMAIN);
+        console.log("MAILTRAP USER:", process.env.MAILTRAP_USER);
+
+
 
         const mailOptions = {
             from: "sam@sam.com",
