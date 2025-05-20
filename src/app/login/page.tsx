@@ -74,8 +74,16 @@ export default function LoginPage() {
 		/>
 		<button
 		onClick={onLogin}
-		className="p-2 bg-blue-500 text-white rounded-lg mb-4 hover:bg-blue-600">Login here</button>
+		className="p-2 bg-blue-500 text-white rounded-lg mb-4 hover:bg-blue-600">Login here
+		</button>
 		<Link href="/signup">Visit Signup Page</Link>
+
+		<p className="text-sm mt-2">
+		<Link href="/forgotpassword" className="text-blue-500 hover:underline">
+			Forgot Password?
+		</Link>
+		</p>
+
 	</div>
 
 	)
