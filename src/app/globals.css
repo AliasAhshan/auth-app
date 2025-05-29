@@ -52,6 +52,21 @@ body {
       opacity: 1;
     }
   }
+
+  .animate-slide-fade-in {
+    animation: slideFadeIn 0.8s ease-out forwards;
+  }
+
+  @keyframes slideFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-80px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 
