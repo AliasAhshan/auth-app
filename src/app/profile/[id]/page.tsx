@@ -1,5 +1,3 @@
-
-
 export const metadata = {
   title: "User Information",
   description: "View user profile details",
