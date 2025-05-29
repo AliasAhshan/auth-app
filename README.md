@@ -1,4 +1,4 @@
-# 🚀 Authentication App — Full-Stack Next.js + MongoDB
+# Authentication App — Full-Stack Next.js + MongoDB
 
 A complete authentication system built with **Next.js (App Router)** and **MongoDB**, styled using **Tailwind CSS**, and integrated with **Mailtrap** for secure email workflows. The UI is smooth, responsive, and animation-friendly.
 
