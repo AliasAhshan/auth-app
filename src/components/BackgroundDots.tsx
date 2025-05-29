@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export default function BackgroundDots() {
   const dots = Array.from({ length: 20 }, (_, i) => ({
     cx: Math.random() * 100,              // random x from 0 to 100

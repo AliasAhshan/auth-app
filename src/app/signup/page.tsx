@@ -16,6 +16,10 @@ export default function SignupPage() {
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
+  const isValidUsername = (username: string) => username.length >= 6;
+  const isValidPassword = (password: string) => password.length >=8 && /[A-Z]/.test(password);
+
+
   const onSignup = async () => {
     try {
       setLoading(true);
@@ -32,7 +36,13 @@ export default function SignupPage() {
 
   useEffect(() => {
     const { email, password, username } = user;
-    setButtonDisabled(!(email && password && username));
+
+	const isFormValid =
+	  email.length > 0 &&
+	  isValidPassword(password) &&
+	  isValidUsername(username);
+
+    setButtonDisabled(!isFormValid);
   }, [user]);
 
   return (
@@ -66,6 +76,9 @@ export default function SignupPage() {
                   setUser({ ...user, username: e.target.value })
                 }
               />
+			  {user.username && !isValidUsername(user.username) && (
+				<p className="text-red-500 text-sm mt-1">Username must be at least 6 characters.</p>
+				)}
             </div>
             <div>
               <label htmlFor="email" className="block mb-1 text-sm">
@@ -92,6 +105,11 @@ export default function SignupPage() {
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
+			  {user.password && !isValidPassword(user.password) && (
+				<p className="text-red-500 text-sm mt-1">
+					Password must be at least 8 characters and include an uppercase letter.
+				</p>
+				)}
             </div>
           </div>
 

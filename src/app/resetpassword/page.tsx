@@ -12,6 +12,8 @@ export default function ResetPasswordPage() {
     const [success, setSuccess] = useState(false);
     const router = useRouter();
 
+    const isValidPassword = (password: string) => password.length >=8 && /[A-Z]/.test(password);
+
 
 
     const resetPassword = async () => {
@@ -63,13 +65,19 @@ export default function ResetPasswordPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
+
+            {password.length > 0 && !isValidPassword(password) && (
+                <p className = "text-red-500 text-sm mt-1">
+					Password must be at least 8 characters and include an uppercase letter.
+                </p>
+            )}
             </div>
 
             <button
             onClick={resetPassword}
-            disabled={!password}
+            disabled={!isValidPassword(password)}
             className={`w-full py-3 rounded-lg font-semibold text-white transition-all duration-200 ${
-                !password
+                !isValidPassword(password)
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg"
             }`}
