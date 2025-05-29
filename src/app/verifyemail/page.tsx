@@ -4,10 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-export const metadata = {
-  title: "Home | Auth App",
-  description: "Welcome to the authentication app homepage",
-};
+
 
 export default function VerifyEmailPage() {
   const [token, setToken] = useState("");
