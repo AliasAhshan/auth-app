@@ -1,55 +1,80 @@
 "use client";
+
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-
-
-
 export default function ProfilePage() {
-    const router = useRouter();
-    const [data, setData] = useState("nothing")
-    const logout = async () => {
-        try {
-            await axios.get("/api/users/logout")
-            toast.success("Logout successful");
-            router.push("/login")
+  const router = useRouter();
+  const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(false);
 
-        } catch (error: any) {
-            console.log(error.message);
-
-            toast.error(error.message);
-        }
+  const logout = async () => {
+    try {
+      await axios.get("/api/users/logout");
+      toast.success("Logout successful");
+      router.push("/login");
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error(error.message);
     }
+  };
 
-    const getUserDetails = async () => {
-        const res = await axios.get("/api/users/me")
-        console.log(res.data);
-        setData(res.data.data._id)
-        
-    
+  const getUserDetails = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("/api/users/me");
+      setUserId(res.data.data._id);
+    } catch (err) {
+      toast.error("Failed to fetch user details.");
+    } finally {
+      setLoading(false);
     }
+  };
 
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white px-6 transition-all duration-300">
+      <div className="w-full max-w-2xl rounded-lg shadow-lg bg-gradient-to-br from-white to-slate-100 dark:from-gray-800 dark:to-gray-900 p-8 space-y-6 opacity-0 translate-y-[-80px] animate-slide-fade-in [animation-delay:0.3s]">
+        <h1 className="text-3xl font-bold text-center">Welcome to Your Profile</h1>
+        <p className="text-center text-gray-500 dark:text-gray-400">
+          Here you can manage your session, view your data, and explore more.
+        </p>
 
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1>Profile</h1>
-            <hr />
-            <p>Profile Page</p>
-            <h2 className="p-1 rounded bg-green-500">{data === "nothing" ? "Nothing" : <Link href={`/profile/${data}`}>{data}</Link>}</h2>
-        <hr />
-        <button
-        onClick={logout}
-        className="p-2 bg-blue-500 text-white rounded-lg mb-4 hover:bg-blue-600 mt-2"
-        >Logout</button>
+        <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
+          <button
+            onClick={getUserDetails}
+            disabled={loading}
+            className={`w-full md:w-auto px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed text-white"
+                : "bg-green-600 hover:bg-green-700 text-white shadow-md hover:shadow-lg"
+            }`}
+          >
+            {loading ? "Fetching..." : "Get User Details"}
+          </button>
 
-        <button
-        onClick={getUserDetails}
-        className="p-2 bg-green-800 text-white rounded-lg mb-4 hover:bg-blue-600 mt-2"
-        >GetUserDetails</button>
+          <button
+            onClick={logout}
+            className="w-full md:w-auto px-6 py-3 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
+          >
+            Logout
+          </button>
         </div>
 
-    )
+        {userId && (
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Your Profile Link:</p>
+            <Link
+              href={`/profile/${userId}`}
+              className="text-blue-600 dark:text-blue-400 hover:underline break-all"
+            >
+              View Full Profile
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
